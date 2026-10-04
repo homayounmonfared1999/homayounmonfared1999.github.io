@@ -1,5 +1,5 @@
 const appConfig = {
-  title: "🍏ادیتز اپدیت شد🍏",
+  title: "🍏ادیتز اپدیت شد2🍏",
   version: "2.0.0",
   downloadUrl: "https://t.me/EditzApps",
   buttonText: "دانلود نسخه جدید",
