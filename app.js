@@ -1,70 +1,48 @@
-const STORAGE_KEY = "editz_app_config";
-const DEFAULT_CONFIG = {
+const appConfig = {
   title: "🍏ادیتز اپدیت شد🍏",
-  version: "1.0.0",
+  version: "2.0.0",
   downloadUrl: "https://t.me/EditzApps",
   buttonText: "دانلود نسخه جدید",
   statusText: "Update",
+  badgeText: "Update",
+  subtitle: "بررسی نسخه و آپدیت جدید",
   fontFamily: "'Vazirmatn', sans-serif",
-  textSize: 16
+  textSize: 16,
+  titleSize: 42,
+  background: "#040810",
+  accent: "#7ce4ff",
+  accent2: "#9cffb3"
 };
 
-function getConfig() {
-  const saved = localStorage.getItem(STORAGE_KEY);
+function applyConfig() {
+  const title = document.querySelector(".title");
+  const versionValue = document.getElementById("versionValue");
+  const link = document.getElementById("downloadLink");
+  const badge = document.querySelector(".badge");
+  const status = document.querySelector(".status");
+  const meta = document.querySelector('meta[name="app-version"]');
 
-  if (!saved) return DEFAULT_CONFIG;
+  if (title) title.textContent = appConfig.title;
+  if (versionValue) versionValue.textContent = appConfig.version;
+  if (link) {
+    link.href = appConfig.downloadUrl;
+    link.textContent = appConfig.buttonText;
+    link.setAttribute("aria-label", appConfig.buttonText);
+  }
+  if (badge) badge.textContent = appConfig.badgeText || appConfig.statusText || "Update";
+  if (status) status.textContent = appConfig.subtitle || "بررسی نسخه و آپدیت جدید";
+  if (meta) meta.setAttribute("content", appConfig.version);
 
-  try {
-    return { ...DEFAULT_CONFIG, ...JSON.parse(saved) };
-  } catch {
-    return DEFAULT_CONFIG;
+  document.body.style.fontFamily = appConfig.fontFamily || "'Vazirmatn', sans-serif";
+  document.body.style.fontSize = `${appConfig.textSize || 16}px`;
+  document.documentElement.style.setProperty("--bg-dark", appConfig.background || "#040810");
+  document.documentElement.style.setProperty("--accent", appConfig.accent || "#7ce4ff");
+  document.documentElement.style.setProperty("--accent-2", appConfig.accent2 || "#9cffb3");
+
+  const titleEl = document.querySelector(".title");
+  if (titleEl) {
+    titleEl.style.fontSize = `${appConfig.titleSize || 42}px`;
   }
 }
 
-function renderConfig() {
-  const config = getConfig();
-
-  const titleEl = document.getElementById("main-title");
-  const versionEl = document.getElementById("app-version");
-  const linkEl = document.getElementById("download-link");
-  const statusEl = document.getElementById("status-text");
-  const pageTitleEl = document.getElementById("page-title");
-
-  if (titleEl) titleEl.textContent = config.title;
-  if (versionEl) versionEl.textContent = config.version;
-  if (linkEl) {
-    linkEl.href = config.downloadUrl;
-    linkEl.textContent = config.buttonText;
-    linkEl.setAttribute("aria-label", config.buttonText);
-  }
-  if (statusEl) statusEl.textContent = config.statusText;
-  if (pageTitleEl) pageTitleEl.textContent = config.title;
-
-  document.body.style.fontFamily = config.fontFamily;
-  document.body.style.fontSize = `${config.textSize}px`;
-}
-
-document.addEventListener("DOMContentLoaded", renderConfig);
-
-fetch("./version.json")
-  .then((response) => response.json())
-  .then((data) => {
-    const version = data.version || "1.0.0";
-    const downloadUrl = data.downloadUrl || "https://t.me/EditzApps";
-    const buttonText = data.buttonText || "دانلود نسخه جدید";
-
-    document.getElementById("app-version").textContent = version;
-    document.getElementById("download-link").href = downloadUrl;
-    document.getElementById("download-link").textContent = buttonText;
-    document.getElementById("download-link").setAttribute("aria-label", buttonText);
-  })
-  .catch(() => {
-    document.getElementById("app-version").textContent = "1.0.0";
-  });
-
-const metaVersion = document.querySelector('meta[name="app-version"]');
-const versionValue = document.getElementById("versionValue");
-
-if (metaVersion && versionValue) {
-  versionValue.textContent = metaVersion.getAttribute("content") || "2.0.0";
-}
+document.addEventListener("DOMContentLoaded", applyConfig);
