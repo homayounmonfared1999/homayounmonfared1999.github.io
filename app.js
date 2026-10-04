@@ -8,7 +8,7 @@ const appConfig = {
   subtitle: "بررسی نسخه و آپدیت جدید",
   fontFamily: "'Vazirmatn', sans-serif",
   textSize: 16,
-  titleSize: 42,
+  titleSize: 15,
   background: "#040810",
   accent: "#7ce4ff",
   accent2: "#9cffb3"
