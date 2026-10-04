@@ -17,7 +17,6 @@
     <div class="frame">
       <div class="content">
         <div class="badge">Update</div>
-
         <h1 class="title">🍏ادیتز اپدیت شد🍏</h1>
 
         <div class="version-box">
@@ -39,6 +38,60 @@
       </div>
     </div>
 
-    <script src="app.js"></script>
+    <script>
+      // =========================
+      // تنظیمات صفحه - فقط در اینجا تغییر دهید
+      // =========================
+      const appConfig = {
+        title: "🍏ادیتز اپدیت شد🍏",
+        version: "2.0.0",
+        downloadUrl: "https://t.me/EditzApps",
+        buttonText: "دانلود نسخه جدید",
+        badgeText: "Update",
+        subtitle: "بررسی نسخه و آپدیت جدید",
+
+        fontFamily: "'Vazirmatn', sans-serif",
+        textSize: 16,
+        titleSize: 42,
+
+        background: "#040810",
+        accent: "#7ce4ff",
+        accent2: "#9cffb3"
+      };
+
+      // =========================
+      // اعمال تنظیمات روی صفحه
+      // =========================
+      function applyConfig() {
+        const titleEl = document.querySelector(".title");
+        const versionEl = document.getElementById("versionValue");
+        const linkEl = document.getElementById("downloadLink");
+        const badgeEl = document.querySelector(".badge");
+        const statusEl = document.querySelector(".status");
+        const metaEl = document.querySelector('meta[name="app-version"]');
+
+        if (titleEl) titleEl.textContent = appConfig.title;
+        if (versionEl) versionEl.textContent = appConfig.version;
+        if (linkEl) {
+          linkEl.href = appConfig.downloadUrl;
+          linkEl.textContent = appConfig.buttonText;
+          linkEl.setAttribute("aria-label", appConfig.buttonText);
+        }
+        if (badgeEl) badgeEl.textContent = appConfig.badgeText;
+        if (statusEl) statusEl.textContent = appConfig.subtitle;
+        if (metaEl) metaEl.setAttribute("content", appConfig.version);
+
+        document.title = appConfig.title;
+        document.body.style.fontFamily = appConfig.fontFamily;
+        document.body.style.fontSize = `${appConfig.textSize}px`;
+        if (titleEl) titleEl.style.fontSize = `${appConfig.titleSize}px`;
+
+        document.documentElement.style.setProperty("--bg-dark", appConfig.background);
+        document.documentElement.style.setProperty("--accent", appConfig.accent);
+        document.documentElement.style.setProperty("--accent-2", appConfig.accent2);
+      }
+
+      document.addEventListener("DOMContentLoaded", applyConfig);
+    </script>
   </body>
 </html>
